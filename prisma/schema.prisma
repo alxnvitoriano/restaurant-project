@@ -1,0 +1,91 @@
+// modelagem do banco de dados
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//requisitos do restaurante
+model Restaurant {
+  id             String         @id @default(uuid())
+  name           String
+  slug           String
+  description    String
+  avatarImgUrl   String
+  coverImg       String
+  menuCategories menuCategory[]
+  products       Product[]
+  orders         Order[]
+  createdt       DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+//requisitos do menu da categoria
+model menuCategory {
+  id           String     @id @default(uuid())
+  name         String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId String
+  products     Product[]
+  createdt     DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+//requistos do produto
+model Product {
+  id             String          @id @default(uuid())
+  name           String
+  description    String
+  price          String
+  imageUrl       String
+  ingredients    String[]
+  orderProducts  OrderProducts[]
+  restaurant     Restaurant      @relation(fields: [restaurantId], references: [id])
+  restaurantId   String
+  menuCategory   menuCategory    @relation(fields: [menuCategoryId], references: [id])
+  menuCategoryId String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+//requisitos da ordem dos produtos  
+model Order {
+  id                Int               @id @default(autoincrement())
+  total             Float
+  status            OrderStatus
+  consumptionMethod consumptionMethod
+  restaurant        Restaurant        @relation(fields: [resstaurantId], references: [id])
+  resstaurantId     String
+  orderProducts     OrderProducts[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+}
+
+//requisitos dos produtos da ordem 
+model OrderProducts {
+  id        String   @id @default(uuid())
+  product   Product  @relation(fields: [productId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId String
+  orderId   Int
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//possibilidades de status da ordem
+enum OrderStatus {
+  PENDING
+  IN_PREPARATION
+  FINISHED
+}
+
+//possibilidades de status do metodo de consumo
+enum consumptionMethod {
+  DELIVERY
+  PICKUP
+}
