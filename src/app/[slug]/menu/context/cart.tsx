@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Product } from "@prisma/client";
-import { createContext, ReactNode, useState } from "react";
+import { Product } from '@prisma/client';
+import { createContext, ReactNode, useState } from 'react';
 
-interface CartProduct 
-  extends Pick<Product, "id" | "name" | "price"| "imageUrl"> {
+export interface CartProduct
+  extends Pick<Product, 'id' | 'name' | 'price' | 'imageUrl'> {
   quantity: number;
 }
 export interface ICartContext {
@@ -31,23 +31,22 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const addProduct = (product: CartProduct) => {
     const productIsAlreadyOnTheCart = products.some(
-        (prevProduct) => prevProduct.id === product.id,
-    )
-    if(!productIsAlreadyOnTheCart) {
-      return setProducts((prev) => [...prev, product])
+      (prevProduct) => prevProduct.id === product.id
+    );
+    if (!productIsAlreadyOnTheCart) {
+      return setProducts((prev) => [...prev, product]);
     }
-    setProducts(prevProducts => {
-      return prevProducts.map(prevProduct => {
-        if(prevProduct.id === product.id) {
+    setProducts((prevProducts) => {
+      return prevProducts.map((prevProduct) => {
+        if (prevProduct.id === product.id) {
           return {
             ...prevProduct,
             quantity: prevProduct.quantity + product.quantity,
-          }
+          };
         }
-        return prevProduct
-      })
-    })
-
+        return prevProduct;
+      });
+    });
   };
 
   return (
