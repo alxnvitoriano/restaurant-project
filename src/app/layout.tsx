@@ -1,16 +1,16 @@
-import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
-import './globals.css';
-import { CartProvider } from './[slug]/menu/context/cart';
+import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
+import "./globals.css";
+import { CartProvider } from "./[slug]/menu/contexts/cart";
 
 const poppins = Poppins({
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  subsets: ['latin'],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: 'VTN Donalds',
-  description: 'O melhor fasfood do mundo',
+  title: "VTN Donalds",
+  description: "O melhor fasfood do mundo",
 };
 
 export default function RootLayout({
