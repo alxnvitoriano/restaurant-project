@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Prisma } from '@prisma/client';
-import { ClockIcon } from 'lucide-react';
-import Image from 'next/image';
-import { useState } from 'react';
-import Products from './products';
+import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Prisma } from "@prisma/client";
+import { ClockIcon } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+import Products from "./products";
 
 interface RestaurantCategoriesProps {
   restaurant: Prisma.RestaurantGetPayload<{
@@ -30,7 +30,7 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
   };
 
   const getCategoryButtonVariant = (category: MenuCategoriesWithProducts) => {
-    return selectedCategory.id === category.id ? 'default' : 'secondary';
+    return selectedCategory.id === category.id ? "default" : "secondary";
   };
   return (
     <div className="relative z-50 mt-[-1.5rem] rounded-t-3xl bg-white">
@@ -69,7 +69,7 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
-      <h3 className="px-5 font-semibold pt-2">{selectedCategory.name}</h3>
+      <h3 className="px-5 pt-2 font-semibold">{selectedCategory.name}</h3>
 
       <Products products={selectedCategory.products} />
     </div>
