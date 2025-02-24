@@ -25,6 +25,7 @@ export const createOrder = async (input: CreateOrderInput) => {
       slug: input.slug,
     },
   });
+  console.log(restaurant);
   if (!restaurant) {
     throw new Error("Restaurant not found");
   }
